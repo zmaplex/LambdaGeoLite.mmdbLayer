@@ -1,0 +1,283 @@
+{
+  "service": {
+    "service": "aws-public-layers",
+    "serviceObject": {
+      "name": "aws-public-layers"
+    },
+    "provider": {
+      "name": "aws",
+      "region": "ap-southeast-1",
+      "stage": "dev",
+      "versionFunctions": true,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ServerlessDeploymentBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+              "BucketEncryption": {
+                "ServerSideEncryptionConfiguration": [
+                  {
+                    "ServerSideEncryptionByDefault": {
+                      "SSEAlgorithm": "AES256"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "ServerlessDeploymentBucketPolicy": {
+            "Type": "AWS::S3::BucketPolicy",
+            "Properties": {
+              "Bucket": {
+                "Ref": "ServerlessDeploymentBucket"
+              },
+              "PolicyDocument": {
+                "Statement": [
+                  {
+                    "Action": "s3:*",
+                    "Effect": "Deny",
+                    "Principal": "*",
+                    "Resource": [
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":s3:::",
+                            {
+                              "Ref": "ServerlessDeploymentBucket"
+                            },
+                            "/*"
+                          ]
+                        ]
+                      },
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":s3:::",
+                            {
+                              "Ref": "ServerlessDeploymentBucket"
+                            }
+                          ]
+                        ]
+                      }
+                    ],
+                    "Condition": {
+                      "Bool": {
+                        "aws:SecureTransport": false
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "GeoLiteDotMmdbLambdaLayerffcae767833429fc886868950abeb0dfc7e9229a": {
+            "Type": "AWS::Lambda::LayerVersion",
+            "Properties": {
+              "Content": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aws-public-layers/dev/1706501732975-2024-01-29T04:15:32.975Z/GeoLiteDotMmdb.zip"
+              },
+              "LayerName": "GeoLiteDotMmdb",
+              "Description": "MaxMind's GeoLite2 Country, City, and ASN databases",
+              "LicenseInfo": "GPLv3",
+              "CompatibleArchitectures": [
+                "x86_64",
+                "arm64"
+              ]
+            },
+            "DeletionPolicy": "Retain"
+          },
+          "GeoLiteDotMmdbWildLambdaLayerPermissionffcae767833429fc886868950abeb0dfc7e9229a": {
+            "Type": "AWS::Lambda::LayerVersionPermission",
+            "Properties": {
+              "Action": "lambda:GetLayerVersion",
+              "LayerVersionArn": {
+                "Ref": "GeoLiteDotMmdbLambdaLayerffcae767833429fc886868950abeb0dfc7e9229a"
+              },
+              "Principal": "*"
+            },
+            "DeletionPolicy": "Retain"
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": {
+              "Ref": "ServerlessDeploymentBucket"
+            },
+            "Export": {
+              "Name": "sls-aws-public-layers-dev-ServerlessDeploymentBucketName"
+            }
+          },
+          "GeoLiteDotMmdbLambdaLayerQualifiedArn": {
+            "Description": "Current Lambda layer version",
+            "Value": {
+              "Ref": "GeoLiteDotMmdbLambdaLayerffcae767833429fc886868950abeb0dfc7e9229a"
+            },
+            "Export": {
+              "Name": "sls-aws-public-layers-dev-GeoLiteDotMmdbLambdaLayerQualifiedArn"
+            }
+          },
+          "GeoLiteDotMmdbLambdaLayerHash": {
+            "Description": "Current Lambda layer hash",
+            "Value": "ffcae767833429fc886868950abeb0dfc7e9229a",
+            "Export": {
+              "Name": "sls-aws-public-layers-dev-GeoLiteDotMmdbLambdaLayerHash"
+            }
+          },
+          "GeoLiteDotMmdbLambdaLayerS3Key": {
+            "Description": "Current Lambda layer S3Key",
+            "Value": "serverless/aws-public-layers/dev/1706501732975-2024-01-29T04:15:32.975Z/GeoLiteDotMmdb.zip",
+            "Export": {
+              "Name": "sls-aws-public-layers-dev-GeoLiteDotMmdbLambdaLayerS3Key"
+            }
+          }
+        }
+      },
+      "coreCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ServerlessDeploymentBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+              "BucketEncryption": {
+                "ServerSideEncryptionConfiguration": [
+                  {
+                    "ServerSideEncryptionByDefault": {
+                      "SSEAlgorithm": "AES256"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "ServerlessDeploymentBucketPolicy": {
+            "Type": "AWS::S3::BucketPolicy",
+            "Properties": {
+              "Bucket": {
+                "Ref": "ServerlessDeploymentBucket"
+              },
+              "PolicyDocument": {
+                "Statement": [
+                  {
+                    "Action": "s3:*",
+                    "Effect": "Deny",
+                    "Principal": "*",
+                    "Resource": [
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":s3:::",
+                            {
+                              "Ref": "ServerlessDeploymentBucket"
+                            },
+                            "/*"
+                          ]
+                        ]
+                      },
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":s3:::",
+                            {
+                              "Ref": "ServerlessDeploymentBucket"
+                            }
+                          ]
+                        ]
+                      }
+                    ],
+                    "Condition": {
+                      "Bool": {
+                        "aws:SecureTransport": false
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": {
+              "Ref": "ServerlessDeploymentBucket"
+            }
+          }
+        }
+      }
+    },
+    "pluginsData": {},
+    "functions": {},
+    "configValidationMode": "warn",
+    "serviceFilename": "serverless.yml",
+    "initialServerlessConfig": {
+      "service": "aws-public-layers",
+      "frameworkVersion": "3",
+      "provider": {
+        "$ref": "$[\"service\"][\"provider\"]"
+      },
+      "package": {
+        "patterns": [
+          "!venv/**",
+          "!node_modules/**",
+          "!package-lock.json",
+          "!package.json",
+          "!**/*.pyc",
+          "!.env"
+        ],
+        "artifactsS3KeyDirname": "serverless/aws-public-layers/dev/code-artifacts",
+        "artifactDirectoryName": "serverless/aws-public-layers/dev/1706501883231-2024-01-29T04:18:03.231Z"
+      },
+      "layers": {
+        "GeoLiteDotMmdb": {
+          "path": "layer",
+          "description": "MaxMind's GeoLite2 Country, City, and ASN databases",
+          "compatibleArchitectures": {
+            "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"GeoLiteDotMmdbLambdaLayerffcae767833429fc886868950abeb0dfc7e9229a\"][\"Properties\"][\"CompatibleArchitectures\"]"
+          },
+          "allowedAccounts": [
+            "*"
+          ],
+          "licenseInfo": "GPLv3",
+          "retain": true,
+          "package": {
+            "artifact": "/home/z/pythonProject/LambdaGeoLite.mmdbLayer/.serverless/GeoLiteDotMmdb.zip"
+          },
+          "artifactAlreadyUploaded": true
+        }
+      }
+    },
+    "layers": {
+      "$ref": "$[\"service\"][\"initialServerlessConfig\"][\"layers\"]"
+    },
+    "isDashboardMonitoringPreconfigured": false
+  },
+  "package": {
+    "artifactDirectoryName": "serverless/aws-public-layers/dev/1706501883231-2024-01-29T04:18:03.231Z",
+    "artifact": ""
+  }
+}

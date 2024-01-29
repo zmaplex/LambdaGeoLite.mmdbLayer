@@ -1,0 +1,27 @@
+service: aws-public-layers
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  region: ap-southeast-1
+
+package:
+  patterns:
+    - "!venv/**"
+    - "!node_modules/**"
+    - "!package-lock.json"
+    - "!package.json"
+    - "!**/*.pyc"
+    - "!.env"
+
+layers:
+  GeoLiteDotMmdb:
+    path: layer
+    description: MaxMind's GeoLite2 Country, City, and ASN databases
+    compatibleArchitectures:
+      - x86_64
+      - arm64
+    allowedAccounts:
+      - "*"
+    licenseInfo: GPLv3
+    retain: true
